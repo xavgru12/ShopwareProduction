@@ -1,0 +1,1 @@
+vendor/deployer/deployer/dep --file=testIt.php deploy -vvv
