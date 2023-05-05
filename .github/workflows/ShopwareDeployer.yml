@@ -17,7 +17,7 @@ env:
 on:
  push:
   branches: 
-    - features/use_flex_deployer
+    - main
 
 # It is important to specify "concurrency" for the workflow,
 # to prevent concurrency between different deploys.
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
