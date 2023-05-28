@@ -95,6 +95,10 @@ task('sw:theme:compile', function () {
     run('cd {{release_path}} && {{bin/console}} theme:compile');
 });
 
+task('deploy:update_code', static function () {
+    upload('.', '{{release_path}}');
+});
+
 function getPlugins(): array
 {
     $output = explode("\n", run('cd {{release_path}} && {{bin/console}} plugin:list'));
