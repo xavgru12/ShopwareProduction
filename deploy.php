@@ -41,7 +41,7 @@ set('shared_files', [
 
 // These directories are shared among all releases.
 set('shared_dirs', [
-    'config/jwt',
+    'config/jwt', //'custom/plugins', // comment for development, so the /custom folder on webhost is not in use
     'files',
     'var/log',
     'public/media',
