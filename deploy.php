@@ -26,10 +26,21 @@ set('default_timeout', 3600); // Increase when tasks take longer than that.
 
 set('repository', 'git@github.com:xavgru12/ShopwareServer.git');
 
+//ShopwareServer
+/*
 host('w01a5092.kasserver.com')
     ->setRemoteUser('ssh-w01a5092')
-    ->set('deploy_path', '/www/htdocs/w01a5092/shopware1504deployer')
+    ->set('deploy_path', '/www/htdocs/w01a5092/ShopwareServer')
     ->set('writable_mode', 'chmod');
+*/
+
+//TestShop
+
+host('w01a5092.kasserver.com')
+    ->setRemoteUser('ssh-w01a5092')
+    ->set('deploy_path', '/www/htdocs/w01a5092/TestShop')
+    ->set('writable_mode', 'chmod');
+
 
 // These files are shared among all releases.
 set('shared_files', [
@@ -131,6 +142,14 @@ function getPlugins(): array
     return $plugins;
 }
 
+task('sw:plugin:install:all', static function () {
+    $plugins = getPlugins();
+    foreach ($plugins as $plugin) {
+        writeln("<info>Running plugin install for " . $plugin['Plugin'] . "</info>\n");
+        run("cd {{release_path}} && {{bin/console}} plugin:install --activate " . $plugin['Plugin']);
+    }
+});
+
 task('sw:plugin:update:all', static function () {
     $plugins = getPlugins();
     foreach ($plugins as $plugin) {
@@ -154,6 +173,7 @@ task('sw:deploy', [
     'sw:plugin:refresh',
     'sw:theme:compile',
     'sw:cache:clear',
+    'sw:plugin:install:all',
     'sw:plugin:update:all',
     'sw:cache:clear',
 ]);
